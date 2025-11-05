@@ -28,7 +28,7 @@ export default function PromptForm({ onSubmit, isLoading }: PromptFormProps) {
     >
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Header */}
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-4 mt-8 md:mt-0">
           <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
