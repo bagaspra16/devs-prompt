@@ -51,16 +51,24 @@ export default function LoadingScene() {
     return () => clearInterval(interval);
   }, []);
 
+  // Block scroll when loading
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-sm overflow-hidden"
     >
-      <div className="relative">
+      <div className="relative px-4">
         {/* 3D Energy Sphere */}
-        <div className="w-64 h-64">
+        <div className="w-48 h-48 md:w-64 md:h-64">
           <Canvas camera={{ position: [0, 0, 3], fov: 75 }}>
             <ambientLight intensity={0.5} />
             <pointLight position={[10, 10, 10]} intensity={2} color="#FF8C42" />
@@ -75,9 +83,9 @@ export default function LoadingScene() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -10 }}
-          className="absolute -bottom-16 left-1/2 -translate-x-1/2 whitespace-nowrap"
+          className="absolute -bottom-12 md:-bottom-16 left-1/2 -translate-x-1/2 w-full text-center px-4"
         >
-          <p className="text-neon-orange font-display text-xl font-semibold text-glow">
+          <p className="text-neon-orange font-display text-base md:text-xl font-semibold text-glow">
             {loadingMessages[messageIndex]}
           </p>
         </motion.div>
@@ -94,7 +102,7 @@ export default function LoadingScene() {
               repeat: Infinity,
               ease: "easeInOut",
             }}
-            className="absolute w-64 h-64 rounded-full border-2 border-neon-orange"
+            className="absolute w-48 h-48 md:w-64 md:h-64 rounded-full border-2 border-neon-orange"
           />
           <motion.div
             animate={{
@@ -107,7 +115,7 @@ export default function LoadingScene() {
               ease: "easeInOut",
               delay: 1,
             }}
-            className="absolute w-64 h-64 rounded-full border-2 border-neon-gold"
+            className="absolute w-48 h-48 md:w-64 md:h-64 rounded-full border-2 border-neon-gold"
           />
         </div>
       </div>

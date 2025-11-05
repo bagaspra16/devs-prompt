@@ -88,3 +88,20 @@
   scrollbar-width: thin;
   scrollbar-color: rgba(100, 100, 100, 0.5) rgba(0, 0, 0, 0.2);
 }
+
+/* Mobile touch scrolling optimization */
+.touch-pan-y {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+/* Prevent scroll chaining on mobile */
+.overscroll-contain {
+  overscroll-behavior: contain;
+}
+
+/* Better text selection on mobile */
+.select-text {
+  -webkit-user-select: text;
+  user-select: text;
+}

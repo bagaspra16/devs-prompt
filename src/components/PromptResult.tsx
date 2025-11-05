@@ -91,8 +91,8 @@ export default function PromptResult({
               <h3 className="text-base md:text-lg font-display font-bold text-gray-400 mb-3 md:mb-4 flex-shrink-0">
                 📝 Original Prompt
               </h3>
-              <div className="bg-black/50 rounded-lg md:rounded-xl p-4 md:p-6 border border-white/10 overflow-y-auto custom-scrollbar max-h-[300px] md:max-h-[500px]">
-                <p className="text-gray-300 leading-relaxed whitespace-pre-wrap text-xs md:text-sm">
+              <div className="bg-black/50 rounded-lg md:rounded-xl p-4 md:p-6 border border-white/10 overflow-y-auto custom-scrollbar max-h-[300px] md:max-h-[500px] touch-pan-y overscroll-contain">
+                <p className="text-gray-300 leading-relaxed whitespace-pre-wrap text-xs md:text-sm select-text">
                   {originalPrompt}
                 </p>
               </div>
@@ -109,8 +109,8 @@ export default function PromptResult({
               <h3 className="text-base md:text-lg font-display font-bold text-neon-orange mb-3 md:mb-4 flex-shrink-0">
                 ✨ Enhanced Prompt
               </h3>
-              <div className="bg-black/50 rounded-lg md:rounded-xl p-4 md:p-6 border border-neon-orange/20 overflow-y-auto custom-scrollbar max-h-[300px] md:max-h-[500px]">
-                <p className="text-white leading-relaxed whitespace-pre-wrap text-xs md:text-sm">
+              <div className="bg-black/50 rounded-lg md:rounded-xl p-4 md:p-6 border border-neon-orange/20 overflow-y-auto custom-scrollbar max-h-[300px] md:max-h-[500px] touch-pan-y overscroll-contain">
+                <p className="text-white leading-relaxed whitespace-pre-wrap text-xs md:text-sm select-text">
                   {enhancedPrompt}
                 </p>
               </div>
@@ -127,8 +127,8 @@ export default function PromptResult({
             <h3 className="text-lg md:text-xl font-display font-bold text-neon-orange mb-3 md:mb-4 flex-shrink-0">
               Enhanced Prompt
             </h3>
-            <div className="bg-black/50 rounded-lg md:rounded-xl p-4 md:p-6 border border-white/10 overflow-y-auto custom-scrollbar max-h-[400px] md:max-h-[500px]">
-              <p className="text-white leading-relaxed whitespace-pre-wrap text-sm md:text-base">
+            <div className="bg-black/50 rounded-lg md:rounded-xl p-4 md:p-6 border border-white/10 overflow-y-auto custom-scrollbar max-h-[400px] md:max-h-[500px] touch-pan-y overscroll-contain">
+              <p className="text-white leading-relaxed whitespace-pre-wrap text-sm md:text-base select-text">
                 {enhancedPrompt}
               </p>
             </div>
