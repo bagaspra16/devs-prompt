@@ -65,10 +65,10 @@ npm install
 
 3. **Set up environment variables**
 ```bash
-cp .env.local.example .env.local
+cp .env.example .env
 ```
 
-The `.env.local.example` already contains a test API key:
+The `.env.example` already contains a test API key:
 ```env
 RAPIDAPI_KEY=18c4b2fd16msh32d393319e95b02p1ebdb6jsncda25d8eb8d3
 ```
@@ -206,7 +206,7 @@ devs-prompt/
 │       └── globals.css               # Custom CSS and Tailwind
 ├── public/
 │   └── favicon.ico                   # App icon
-├── .env.local.example                # Environment variables template
+├── .env.example                      # Environment variables template
 ├── package.json                      # Dependencies and scripts
 ├── tailwind.config.ts                # Tailwind configuration
 ├── tsconfig.json                     # TypeScript configuration
@@ -220,7 +220,7 @@ devs-prompt/
 
 ### Environment Variables
 
-Create a `.env.local` file in the root directory:
+Create a `.env` file in the root directory:
 
 ```env
 RAPIDAPI_KEY=your_rapidapi_key_here
@@ -230,7 +230,7 @@ RAPIDAPI_KEY=your_rapidapi_key_here
 1. Sign up at [RapidAPI](https://rapidapi.com)
 2. Subscribe to [ChatGPT-42 API](https://rapidapi.com/rphrp1985/api/chatgpt-42)
 3. Copy your API key
-4. Replace in `.env.local`
+4. Replace in `.env`
 
 ### Customization
 
@@ -385,7 +385,7 @@ npx tsc --noEmit
 
 ### API Key Issues
 **Problem**: "RapidAPI key not configured"
-**Solution**: Check `.env.local` file exists with `RAPIDAPI_KEY`
+**Solution**: Check `.env` file exists with `RAPIDAPI_KEY`
 
 ### Port Already in Use
 **Problem**: Port 3000 is already in use
