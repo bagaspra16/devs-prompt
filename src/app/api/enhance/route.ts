@@ -1,3 +1,4 @@
+import Groq from "groq-sdk";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
@@ -11,9 +12,9 @@ export async function POST(req: Request) {
       );
     }
 
-    if (!process.env.RAPIDAPI_KEY) {
+    if (!process.env.GROQ_API_KEY) {
       return NextResponse.json(
-        { error: 'RapidAPI key not configured' },
+        { error: 'Groq API key not configured' },
         { status: 500 }
       );
     }
@@ -183,38 +184,51 @@ IMPORTANT: Write efficiently. Be thorough but concise. Complete every section yo
 
 Transform this input:`;
 
-    const requestData = {
+    const client = new Groq({ apiKey: process.env.GROQ_API_KEY });
+
+    const completion = await client.chat.completions.create({
+      model: "openai/gpt-oss-120b",
       messages: [
         {
-          role: 'system',
-          content: systemPrompt
+          role: "system",
+          content: systemPrompt,
         },
         {
-          role: 'user',
-          content: userPrompt
-        }
+          role: "user",
+          content: userPrompt,
+        },
       ],
-      web_access: false
-    };
-
-    const response = await fetch('https://chatgpt-42.p.rapidapi.com/gpt4o', {
-      method: 'POST',
-      headers: {
-        'x-rapidapi-key': process.env.RAPIDAPI_KEY || '',
-        'x-rapidapi-host': 'chatgpt-42.p.rapidapi.com',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestData)
+      temperature: 1,
+      max_completion_tokens: 2048,
+      top_p: 1,
+      reasoning_effort: "medium",
+      stream: true,
+      stop: null,
     });
 
-    if (!response.ok) {
-      throw new Error(`API request failed with status ${response.status}`);
-    }
+    // Stream the response back to the client
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        try {
+          for await (const chunk of completion) {
+            const content = chunk.choices[0]?.delta?.content || "";
+            if (content) {
+              controller.enqueue(encoder.encode(content));
+            }
+          }
+        } finally {
+          controller.close();
+        }
+      },
+    });
 
-    const data = await response.json();
-    const result = data.result || data.message || data.content || "";
-    
-    return NextResponse.json({ result });
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+      },
+    });
   } catch (error) {
     console.error('Error enhancing prompt:', error);
     return NextResponse.json(

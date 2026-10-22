@@ -26,13 +26,24 @@ export default function Home() {
         body: JSON.stringify({ userPrompt: prompt }),
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to enhance prompt');
+        const errData = await response.json().catch(() => ({}));
+        throw new Error((errData as { error?: string }).error || 'Failed to enhance prompt');
       }
 
-      setEnhancedPrompt(data.result);
+      // Read the streaming plain-text response
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = '';
+
+      if (reader) {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          accumulated += decoder.decode(value, { stream: true });
+          setEnhancedPrompt(accumulated);
+        }
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred');
       console.error('Error:', err);
@@ -58,7 +69,7 @@ export default function Home() {
           <PromptForm onSubmit={handleSubmit} isLoading={isLoading} />
         )}
 
-        {enhancedPrompt && !isLoading && (
+        {enhancedPrompt && (
           <PromptResult
             originalPrompt={originalPrompt}
             enhancedPrompt={enhancedPrompt}
